@@ -1,0 +1,141 @@
+@use "@/styles/mixins.scss" as mixins;
+
+:root {
+  --color-black: #141413;
+  --color-white: #FFFFFF;
+  --color-orange: #FF671B;
+  --color-dark-red: #960800;
+  --app-height: 100dvh;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+}
+
+@media only screen and (min-width: 850px) {
+  ::-webkit-scrollbar {
+    background-color: var(--color-orange);
+    height: 10px;
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ffb088;
+    border-radius: 17px;
+  }
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::selection {
+  color: var(--color-white);
+  background-color: var(--color-dark-red);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter-from,
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+html,
+body,
+.app,
+.layout,
+#app {
+  padding: 0;
+  margin: 0;
+  color: var(--color-black);
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: var(--color-white);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  min-height: var(--app-height);
+}
+
+body {
+  overflow-y: visible !important;
+  min-height: var(--app-height);
+}
+
+a,
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  cursor: pointer;
+
+  transition: all .3s;
+  display: inline-block;
+}
+
+ul {
+  list-style: none;
+}
+
+input,
+textarea {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+img,
+picture,
+source,
+video,
+svg {
+  pointer-events: none !important;
+  -webkit-user-drag: none !important;
+  -moz-user-select: none !important;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.main {
+  height: var(--app-height);
+
+  padding: 1rem;
+  padding-top: .8125rem;
+  scroll-behavior: smooth;
+}

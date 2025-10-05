@@ -1,0 +1,9 @@
+@mixin center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin animation {
+  transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}

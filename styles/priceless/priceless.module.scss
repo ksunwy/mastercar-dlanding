@@ -1,0 +1,303 @@
+@use "@/styles/mixins.scss" as mixins;
+
+.priceless {
+    @include mixins.center-x;
+    position: absolute;
+    top: .8125rem;
+
+    height: calc(100% - 1.8125rem);
+    width: calc(100% - 2rem);
+    
+    display: flex;
+    align-items: end;
+    justify-content: center;
+
+    padding-bottom: 2.375rem;
+
+    border-radius: 2rem;
+    overflow: hidden;
+
+    &__video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 2rem;
+        z-index: 1;
+        cursor: pointer;
+    }
+}
+
+.player {
+    @include mixins.center-x;
+    bottom: 2.375rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.5rem 1rem;
+
+    width: 100%;
+    max-width: 25rem;
+    height: 4rem;
+
+    background: var(--color-white);
+    border-radius: 2.5rem;
+    z-index: 10;
+
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+            fill: var(--color-black);
+        }
+    }
+
+    &__line {
+        flex: 1;
+        height: 1.4px;
+        margin: 0 1rem;
+        background: #ddd;
+        position: relative;
+    }
+
+    &__progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: var(--color-orange);
+        width: 0%;
+    }
+
+    &__time {
+        font-size: 0.9rem;
+        color: #777;
+        margin-right: 1rem;
+        font-weight: 500;
+        width: 2.875rem;
+    }
+
+    &__volume {
+        @include mixins.animation;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 2.625rem;
+        height: 2.625rem;
+
+        border: 1px solid #F1EFEC;
+        border-radius: 100%;
+        cursor: pointer;
+
+        &:hover {
+            border-color: #D4CFC8;
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+}
+
+.goals {
+    @include mixins.center-x;
+    position: absolute;
+    top: 0;
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+
+    &__content {
+        @include mixins.center-x;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5.25rem;
+
+        color: var(--color-white);
+
+        background: rgba(255, 112, 41, 0.32);
+        backdrop-filter: blur(80px);
+
+        height: 100%;
+        width: 100%;
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 500;
+
+        &>sup {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+            background: #ffffff2f;
+            border-radius: 100%;
+
+            &>span {
+                font-size: .875rem;
+            }
+        }
+    }
+
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: .75rem;
+        width: 40.1875rem;
+        margin: 0 auto;
+    }
+
+    &__item {
+        transition: all 0.6s cubic-bezier(.165, .84, .44, 1);
+
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 2rem;
+        height: 3.125rem;
+
+        color: #F5C1AD;
+        font-size: .82rem;
+        font-weight: 500;
+
+        border: 1px solid #ffffff2b;
+        border-radius: 2.25rem;
+
+        overflow: hidden;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--color-white);
+            border-color: var(--color-white);
+        }
+
+        &__inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: .82rem;
+            overflow: hidden;
+        }
+
+        &__text {
+            transition: all 0.6s cubic-bezier(.165, .84, .44, 1);
+            display: block;
+            transform: translateY(0);
+        }
+
+        &__hover {
+            transition: all 0.6s cubic-bezier(.165, .84, .44, 1);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: block;
+            transform: translateY(0);
+        }
+
+        &:hover {
+            .goals__item__text {
+                transform: translateY(-100%);
+            }
+
+            .goals__item__hover {
+                transform: translateY(-98%);
+            }
+        }
+
+        &.active {
+            background: var(--color-white);
+            color: var(--color-black);
+            border-color: var(--color-white);
+        }
+    }
+
+    &__button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 6.9375rem;
+        height: 3rem;
+
+        background: linear-gradient(91.89deg, #ff691e 9.03%, #FF671B 94.06%);
+        color: var(--color-white);
+        font-weight: 500;
+        font-size: 0.875rem;
+        
+        border-radius: 2rem;
+
+        z-index: 1;
+        overflow: hidden;
+        transition: all .6s cubic-bezier(.165,.84,.44,1);
+
+        span {
+            transition: all .6s cubic-bezier(.165,.84,.44,1);
+            display: inline-block;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2rem;
+            height: 0;
+            background: var(--color-white);
+            border-radius: 50%;
+            z-index: -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-orange);
+            transition: all .6s cubic-bezier(.165,.84,.44,1);
+        }
+
+        &:hover {
+            span {
+                transform: translateY(-240%);
+            }
+
+            &::after {
+                width: 100%;
+                height: 100%;
+                border-radius: 2rem;
+                content: 'Discover';
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}

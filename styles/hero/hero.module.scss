@@ -1,0 +1,23 @@
+@use "@/styles/mixins.scss" as mixins;
+
+.hero {
+    height: 100%;
+
+    border-radius: 2rem;
+
+    &__canvas {
+        height: calc(100% - 1.8125rem);
+        width: calc(100% - 2rem);
+        border-radius: 2rem;
+    }
+
+    &__title {
+        @include mixins.center-x;
+        bottom: 7.5rem;
+
+        color: var(--color-white);
+        font-weight: 500;
+        font-size: 3rem;
+        text-align: center;
+    }
+}
