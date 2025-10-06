@@ -16,7 +16,7 @@
         // transform: translate(-50%, -50%);
         object-fit: cover;
         border-radius: 2rem;
-         height: calc(100% - 1.8125rem);
+        height: calc(100% - 1.8125rem);
         width: calc(100% - 2rem);
     }
 
@@ -43,5 +43,6 @@
         font-size: 3rem;
         text-align: center;
         margin-top: 10rem;
+        user-select: none;
     }
 }

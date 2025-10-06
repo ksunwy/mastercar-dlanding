@@ -20,8 +20,8 @@
 @media only screen and (min-width: 850px) {
   ::-webkit-scrollbar {
     background-color: var(--color-orange);
-    height: 10px;
-    width: 10px;
+    height: 5px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -134,6 +134,7 @@ svg {
 
 .main {
   height: var(--app-height);
+  width: 100dvw;
 
   padding: 1rem;
   padding-top: .8125rem;
@@ -179,7 +180,7 @@ svg {
 
 .no-scroll {
   overflow: hidden !important;
-    position: fixed;
+   position: fixed;
   width: 100%;
   height: 100%;
 }

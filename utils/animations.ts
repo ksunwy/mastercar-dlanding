@@ -28,7 +28,7 @@ export const initializeAnimations = (
             {
                 marginTop: 0,
                 duration: 1,
-                delay: 1,
+                delay: 3,
                 ease: "power2.out",
             }
         )
