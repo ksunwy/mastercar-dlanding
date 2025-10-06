@@ -6,7 +6,7 @@ import { DRACOLoader } from 'three-stdlib';
 import * as THREE from "three";
 import styles from "@/styles/hero/hero.module.scss";
 
-const Hero = () => {
+const Hero = ({ onModelLoaded }: { onModelLoaded: () => void }) => {
     const [isClient, setIsClient] = useState<boolean>(false);
     const [scene, setScene] = useState<THREE.Group | null>(null);
 
@@ -26,6 +26,7 @@ const Hero = () => {
                 "/scene.glb",
                 (gltf) => {
                     setScene(gltf.scene);
+                    onModelLoaded();
                 },
                 undefined,
                 (error) => console.error("Error loading GLTF:", error)
@@ -33,22 +34,24 @@ const Hero = () => {
         }
     }, [isClient]);
 
-
     return (
         <section className={styles.hero}>
-            <Canvas className={styles.hero__canvas}>
-                <ambientLight color="#ffffff" position={[0, 10, 0]} intensity={1} />
-                <directionalLight color="#ffffff" position={[1, 1, 1]} intensity={3} />
+            <Canvas className={styles.hero__canvas} >
+                {/* <color attach="background" args={["#fe831d"]} />  */}
+                <ambientLight color="#632e0f" position={[0, 1, 0]} intensity={1} />
+                <directionalLight color="#ffb87a" position={[0, 4, 4]} intensity={70} />
                 <Suspense fallback={null}>
                     {scene && (
                         <mesh position={[0, 0, 0]}>
                             <primitive object={scene} />
                         </mesh>
                     )}
-                    <PerspectiveCamera makeDefault position={[3, 4, -3]} rotation={[-1, 0.5, 0.75]} />
+                    <PerspectiveCamera makeDefault position={[3, 0, 14]} rotation={[0, 0, 0]} />
                 </Suspense>
             </Canvas>
-            <h1 className={styles.hero__title}>Get to know today’s Mastercard</h1>
+            <div className={styles.hero__title_wrapper}>
+                <h1 className={`${styles.hero__title} title`}>Get to know today’s Mastercard</h1>
+            </div>
         </section>
     );
 };

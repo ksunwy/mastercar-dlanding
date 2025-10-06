@@ -1,102 +1,119 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import styles from '@/styles/app/preloader.module.scss';
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import HeroClasses from "@/styles/hero/hero.module.scss";
+import styles from "@/styles/app/preloader.module.scss";
 
-export default function Preloader() {
-    const preloaderRef = useRef<HTMLDivElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const preloaderTimeline = gsap.timeline({ paused: true });
+export default function Preloader({ isLoaded }: { isLoaded: boolean }) {
+  const preloaderRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const preloaderTimeline = useRef<gsap.core.Timeline | null>(null);
 
-    const canvasWidth = 272;  
-    const canvasHeight = 128;
+  const [animationDone, setAnimationDone] = useState(false);
 
-    const redCircle = { x: 0, y: canvasHeight / 2, radius: 64, color: '#eb001bef' };
-    const yellowCircle = { x: 0, y: canvasHeight / 2, radius: 64, color: '#f89c1ce2' };
+  const canvasWidth = 272;
+  const canvasHeight = 128;
 
-    const initAnimation = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+  const redCircle = { x: 0, y: canvasHeight / 2, radius: 64, color: "#eb001bef" };
+  const yellowCircle = { x: 0, y: canvasHeight / 2, radius: 64, color: "#f89c1ce2" };
 
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+  const initAnimation = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-        const redCircleAnimation = { x: 0 };
-        const yellowCircleAnimation = { x: 0 };
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const redCircleAnimation = { x: 0 };
+    const yellowCircleAnimation = { x: 0 };
 
-        preloaderTimeline.to(redCircleAnimation, {
-            x: -38, 
-            duration: 0.5,
-            ease: 'power2.inOut',
-            onUpdate: () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                ctx.fillStyle = redCircle.color;
-                ctx.beginPath();
-                ctx.arc(canvasWidth / 2 + redCircleAnimation.x, canvasHeight / 2, redCircle.radius, 0, Math.PI * 2);
-                ctx.fill();
+    preloaderTimeline.current = gsap.timeline({ paused: true });
 
-                ctx.fillStyle = yellowCircle.color;
-                ctx.beginPath();
-                ctx.arc(canvasWidth / 2 + yellowCircleAnimation.x, canvasHeight / 2, yellowCircle.radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        });
+    preloaderTimeline.current
+      .to(redCircleAnimation, {
+        x: -38,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        preloaderTimeline.to(
-            yellowCircleAnimation,
-            {
-                x: 38,  
-                duration: 0.5,
-                ease: 'power2.inOut'
-            },
-            0
-        );
+          ctx.fillStyle = redCircle.color;
+          ctx.beginPath();
+          ctx.arc(
+            canvasWidth / 2 + redCircleAnimation.x,
+            canvasHeight / 2,
+            redCircle.radius,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
 
-        preloaderTimeline.to(
-            {},
-            {
-                duration: 0.5,
-                onComplete: () => {
-                    gsap.to(preloaderRef.current, {
-                        duration: 0.4,
-                        autoAlpha: 0,
-                        ease: 'linear',
-                        onComplete: () => {
-                            const html = document.querySelector('html');
-                            if (html) {
-                                html.style.overflowY = 'visible';
-                            }
-                        }
-                    });
-                }
-            },
-            0.5
-        );
+          ctx.fillStyle = yellowCircle.color;
+          ctx.beginPath();
+          ctx.arc(
+            canvasWidth / 2 + yellowCircleAnimation.x,
+            canvasHeight / 2,
+            yellowCircle.radius,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
+        },
+      })
+      .to(
+        yellowCircleAnimation,
+        {
+          x: 38,
+          duration: 0.5,
+          ease: "power2.inOut",
+        },
+        0
+      )
+      .to(
+        {},
+        {
+          duration: 0.4,
+          onComplete: () => {
+            setAnimationDone(true);
+          },
+        },
+        0.5
+      );
 
-        preloaderTimeline.play();
-    };
+    preloaderTimeline.current.play();
+  };
 
-    useEffect(() => {
-        const html = document.querySelector('html');
-        if (html) {
-            html.style.overflowY = 'hidden';
-        }
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (html) html.style.overflowY = "hidden";
+    initAnimation();
+  }, []);
 
-        initAnimation();
-    }, []);
+  useEffect(() => {
+    if (isLoaded && animationDone) {
+      gsap.to(preloaderRef.current, {
+        duration: 0.6,
+        autoAlpha: 0,
+        ease: "power2.out",
+        onComplete: () => {
+          const html = document.querySelector("html");
+          if (html) html.style.overflowY = "visible";
+        },
+      });
+    }
+  }, [isLoaded, animationDone]);
 
-    return (
-        <div className={styles.preloader} ref={preloaderRef}>
-            <div className={styles['inner-container']}>
-                <div className={styles.preloader__center}>
-                    <canvas ref={canvasRef} />
-                </div>
-            </div>
+  return (
+    <div className={styles.preloader} ref={preloaderRef}>
+      <div className={styles["inner-container"]}>
+        <div className={styles.preloader__center}>
+          <canvas ref={canvasRef} />
         </div>
-    );
+      </div>
+    </div>
+  );
 }

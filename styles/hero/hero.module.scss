@@ -4,6 +4,10 @@
     height: 100%;
 
     border-radius: 2rem;
+    background-image: url('/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     &__canvas {
         height: calc(100% - 1.8125rem);
@@ -11,13 +15,22 @@
         border-radius: 2rem;
     }
 
-    &__title {
+    &__title_wrapper {
         @include mixins.center-x;
         bottom: 7.5rem;
+        height: 3.5rem;
+        overflow: hidden;
 
+        @media (max-width: 1578px) {
+            height: 6.7rem;
+        }
+    }
+
+    &__title {
         color: var(--color-white);
         font-weight: 500;
         font-size: 3rem;
         text-align: center;
+        margin-top: 10rem;
     }
 }

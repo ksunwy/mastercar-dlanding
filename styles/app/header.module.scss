@@ -2,17 +2,14 @@
 
 .header {
     @include mixins.center-x;
-    @include mixins.animation;
     position: fixed;
     top: 2.125rem;
 
     display: flex;
     align-items: center;
-    // justify-content: space-between;
     gap: 2.3rem;
 
     max-height: 3.125rem;
-    // max-width: 18rem;
 
     padding: 0.875rem 0.5rem;
     padding-left: 0;
@@ -22,7 +19,13 @@
 
     backdrop-filter: blur(50px);
 
+    will-change: width;
+    transition: all .3s;
     z-index: 100;
+
+    &:hover {
+        width: 17.7rem;
+    }
 
     &__image {
         position: relative;
@@ -51,6 +54,7 @@
 
         height: .825rem;
         overflow: hidden;
+        transition: color 0.3s ease;
 
         &__text {
             @include mixins.animation;
@@ -79,7 +83,6 @@
         }
     }
 
-
     &__button {
         position: relative;
         min-width: 2.2rem;
@@ -103,7 +106,7 @@
             z-index: 1;
 
             circle {
-                stroke: #D57561;
+                stroke: #ffffff70;
                 transition: stroke 0.3s ease;
             }
         }

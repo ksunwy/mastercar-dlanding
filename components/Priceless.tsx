@@ -1,7 +1,8 @@
 import { useMediaPlayer } from "@/hooks/useMediaPlayer";
 import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 import styles from "@/styles/priceless/priceless.module.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useCustomCursor } from "@/hooks/useCustomCursor";
 
 const Priceless = () => {
   const {
@@ -18,6 +19,28 @@ const Priceless = () => {
   } = useMediaPlayer("https://www.mastercard.com/businessoutcomes/videos/home/personalize.mp4");
 
   const [activeItems, setActiveItems] = useState<number[]>([]);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  useCustomCursor({
+    videoContainerRef,
+    shouldShowCursor: (e: MouseEvent) => {
+      if (!videoContainerRef.current) return false;
+      const videoRect = videoContainerRef.current.getBoundingClientRect();
+      return (
+        e.clientX >= videoRect.left &&
+        e.clientX <= videoRect.right &&
+        e.clientY >= videoRect.top &&
+        e.clientY <= videoRect.bottom &&
+        !isPlaying
+      );
+    },
+    cursorText: "Play",
+    cursorSvg: `
+      <svg width="9" height="10" viewBox="0 0 9 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.32828 4.57692C8.63965 4.77304 8.63965 5.22696 8.32828 5.42308L1.51647 9.7134C1.18351 9.92311 0.75 9.68382 0.75 9.29032V0.709676C0.75 0.316178 1.18351 0.0768883 1.51647 0.286598L8.32828 4.57692Z" fill="white"/>
+      </svg>
+    `,
+  });
 
   const handleItemClick = (index: number) => {
     setActiveItems((prev) =>
@@ -29,7 +52,7 @@ const Priceless = () => {
 
   return (
     <section className={styles.priceless}>
-      <div className="" style={{ width: "100%", height: "100%" }} onClick={handleVideoClick}>
+      <div style={{ width: "100%", height: "100%" }} ref={videoContainerRef} onClick={handleVideoClick}>
         <video
           ref={videoRef}
           className={styles.priceless__video}
@@ -57,7 +80,7 @@ const Priceless = () => {
 
       <section className={styles.goals}>
         <div className={styles.goals__content}>
-          <h2 className={styles.goals__title}>Let's talk about <br /> your goals <sup><span>00</span></sup></h2>
+          <h2 className={styles.goals__title}>Let's talk about your goals <sup><span>00</span></sup></h2>
           <div className={styles.goals__items}>
             {items.map((item, index) => (
               <div

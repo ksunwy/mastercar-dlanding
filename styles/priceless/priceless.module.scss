@@ -208,6 +208,7 @@
 
             height: .82rem;
             overflow: hidden;
+            user-select: none;
         }
 
         &__text {
@@ -260,6 +261,7 @@
 
         z-index: 1;
         overflow: hidden;
+        user-select: none;
         transition: all .6s cubic-bezier(.165,.84,.44,1);
 
         span {
