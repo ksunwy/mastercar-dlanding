@@ -4,10 +4,21 @@
     height: 100%;
 
     border-radius: 2rem;
-    background-image: url('/bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    // background-image: url('/bg.png');
+    // background-size: cover;
+    // background-position: center;
+    // background-repeat: no-repeat;
+
+    &__bg {
+        // position: absolute;
+        // left: 50%;
+        // top: 50%;
+        // transform: translate(-50%, -50%);
+        object-fit: cover;
+        border-radius: 2rem;
+         height: calc(100% - 1.8125rem);
+        width: calc(100% - 2rem);
+    }
 
     &__canvas {
         height: calc(100% - 1.8125rem);

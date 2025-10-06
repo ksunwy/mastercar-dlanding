@@ -1,10 +1,11 @@
 import { Suspense, useEffect, useState } from "react";
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera, Environment } from '@react-three/drei';
 import { GLTFLoader } from 'three-stdlib';
 import { DRACOLoader } from 'three-stdlib';
 import * as THREE from "three";
 import styles from "@/styles/hero/hero.module.scss";
+import Image from "next/image";
 
 const Hero = ({ onModelLoaded }: { onModelLoaded: () => void }) => {
     const [isClient, setIsClient] = useState<boolean>(false);
@@ -36,10 +37,15 @@ const Hero = ({ onModelLoaded }: { onModelLoaded: () => void }) => {
 
     return (
         <section className={styles.hero}>
-            <Canvas className={styles.hero__canvas} >
+            <Image src={"/bg.jpg"} alt="bg" fill priority className={styles.hero__bg} />
+            <Canvas className={styles.hero__canvas}>
                 {/* <color attach="background" args={["#fe831d"]} />  */}
-                <ambientLight color="#632e0f" position={[0, 1, 0]} intensity={1} />
+                <ambientLight color="#bb9985" position={[0, 1, 0]} intensity={1} />
                 <directionalLight color="#ffb87a" position={[0, 4, 4]} intensity={70} />
+                {/* <Environment
+                    files="/bg.jpg"      
+                    background={true}   
+                /> */}
                 <Suspense fallback={null}>
                     {scene && (
                         <mesh position={[0, 0, 0]}>
